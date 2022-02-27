@@ -35,7 +35,7 @@ struct HomeView: View {
                                  HStack {
                                      ForEach(photos) { item in
                                          NavigationLink(destination: PhotoDetailView(photo: item)) {
-                                             PhotoView(photo: item, width: 80, height: 80, cornerRadius: 10)
+                                             ThumbnailView(photo: item, width: 80, height: 80, cornerRadius: 10)
                                              
                                          }
                                              
@@ -56,7 +56,7 @@ struct HomeView: View {
                                 ScrollView (.horizontal, showsIndicators: false) {
                                      LazyHStack {
                                          ForEach(secondRowViewModel.photos) { item in
-                                             PhotoView(photo: item, width: 80, height: 80, cornerRadius: 10)
+                                             ThumbnailView(photo: item, width: 80, height: 80, cornerRadius: 10)
 
                                          }
                                      }
@@ -75,7 +75,7 @@ struct HomeView: View {
                                 ScrollView (.horizontal, showsIndicators: false) {
                                      LazyHStack {
                                          ForEach(secondRowViewModel.photos) { item in
-                                             PhotoView(photo: item, width: 80, height: 80, cornerRadius: 10)
+                                             ThumbnailView(photo: item, width: 80, height: 80, cornerRadius: 10)
 
                                          }
                                      }

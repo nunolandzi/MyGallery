@@ -13,7 +13,7 @@ struct PhotoDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         VStack{
-            PhotoView(photo: photo, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width, cornerRadius: 0)
+            PhotoView(photo: photo)
             
             Spacer()
         }

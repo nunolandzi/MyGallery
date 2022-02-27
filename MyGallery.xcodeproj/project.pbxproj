@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E7241FD227CBD785002FF421 /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7241FD127CBD785002FF421 /* ThumbnailView.swift */; };
 		E767255227C8FCFD00DCD95E /* MyGalleryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E767255127C8FCFD00DCD95E /* MyGalleryApp.swift */; };
 		E767255427C8FCFD00DCD95E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E767255327C8FCFD00DCD95E /* ContentView.swift */; };
 		E767255627C8FCFE00DCD95E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E767255527C8FCFE00DCD95E /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E7241FD127CBD785002FF421 /* ThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
 		E767254E27C8FCFD00DCD95E /* MyGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E767255127C8FCFD00DCD95E /* MyGalleryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGalleryApp.swift; sourceTree = "<group>"; };
 		E767255327C8FCFD00DCD95E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				E767258227C960A200DCD95E /* HomeView.swift */,
 				E767258827CA46A200DCD95E /* PhotoDetailView.swift */,
 				E767258A27CA715B00DCD95E /* FavesView.swift */,
+				E7241FD127CBD785002FF421 /* ThumbnailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				E767258927CA46A200DCD95E /* PhotoDetailView.swift in Sources */,
 				E767258127C95E1C00DCD95E /* ErrorView.swift in Sources */,
 				E767258B27CA715B00DCD95E /* FavesView.swift in Sources */,
+				E7241FD227CBD785002FF421 /* ThumbnailView.swift in Sources */,
 				E767256627C8FDEB00DCD95E /* PhotosModel.swift in Sources */,
 				E767257527C9093400DCD95E /* PhotosViewModel.swift in Sources */,
 				E767258727CA33A900DCD95E /* Constants.swift in Sources */,

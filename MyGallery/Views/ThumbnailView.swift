@@ -1,17 +1,18 @@
 //
-//  PhotoView.swift
+//  ThumbnailView.swift
 //  MyGallery
 //
-//  Created by Nuno Silva on 25/02/2022.
+//  Created by Nuno Silva on 27/02/2022.
 //
 
 import SwiftUI
 import URLImage
 
-struct PhotoView: View {
-    
+struct ThumbnailView: View {
     let photo: Photo
-    
+    let width: CGFloat
+    let height: CGFloat
+    let cornerRadius: CGFloat
     
     var body: some View {
         VStack{
@@ -27,29 +28,25 @@ struct PhotoView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                 }
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-                .cornerRadius(0)
+                .frame(width: width, height: height)
+                .cornerRadius(cornerRadius)
             }else{
                 PlaceholderImageView()
             }
             
+            Text(photo.title ?? "")
+                .foregroundColor(.primary)
+                .font(.system(size: 12, weight: .semibold))
+                .lineLimit(1)
+            
         }
         .padding()
+        .frame(width: 100)
     }
 }
 
-struct PlaceholderImageView: View {
-    var body: some View{
-        Image(systemName: "photo.fill")
-            .foregroundColor(.white)
-            .background(Color.white)
-            .frame(width: 100, height: 100)
-    }
-}
-
-struct PhotoView_Previews: PreviewProvider {
+struct ThumbnailView_Previews: PreviewProvider {
     static var previews: some View {
-        PhotoView(photo: Photo.dummyData)
-            .previewLayout(.sizeThatFits)
+        ThumbnailView(photo: Photo.dummyData, width: 80, height: 80, cornerRadius: 8)
     }
 }
