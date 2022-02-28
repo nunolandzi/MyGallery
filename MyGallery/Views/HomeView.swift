@@ -138,6 +138,7 @@ struct HomeView: View {
                             
                         }
                     }
+                    .listStyle(.grouped)
                     .frame(height: UIScreen.main.bounds.height*1/3)
                     .offset(y: showFiltersMenu ? 0 : UIScreen.main.bounds.height*1/3 + 20)
             }

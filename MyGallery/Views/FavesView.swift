@@ -32,7 +32,7 @@ struct FavesView: View {
                             ThumbnailView(photo: photo, width: 90, height: 90, cornerRadius: 0)
                         } //: LOOP
                     } //: GRID
-                }.navigationTitle("Favourites")
+                }.navigationTitle("User Faves")
                     .overlay{
                         VStack{
                             Image(systemName: "doc.text.magnifyingglass")

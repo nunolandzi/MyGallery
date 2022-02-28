@@ -9,11 +9,25 @@ import SwiftUI
 import URLImage
 
 struct PhotoDetailView: View {
-    let photo: Photo
+    
     @Environment(\.presentationMode) var presentationMode
+    
+    @State var share: Bool = false
+    @State var url = URL(string: "")
+    
+    let photo: Photo
+    
     var body: some View {
         VStack{
             PhotoView(photo: photo)
+            
+            Text(photo.author ?? "")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+            Text("Published: \(photo.published ?? "")")
+                    .font(.caption)
+                    .foregroundColor(.gray)
             
             Spacer()
         }
@@ -22,7 +36,7 @@ struct PhotoDetailView: View {
         .toolbar {
             ToolbarItem {
                 Button {
-                    
+                    self.share = true
                 } label: {
                     Image(systemName: "square.and.arrow.up")
                         .foregroundColor(.primary)
@@ -34,6 +48,16 @@ struct PhotoDetailView: View {
                 }
             }
         }
+        .sheet(isPresented: $share, content:{
+            
+            let title = photo.title ?? "KI"
+            
+            if let url = URL(string: photo.media.m){
+                ShareSheet(items: [url, title])
+            }
+            
+            
+        })
     }
 }
 
