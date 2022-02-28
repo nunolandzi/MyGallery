@@ -33,6 +33,19 @@ struct FavesView: View {
                         } //: LOOP
                     } //: GRID
                 }.navigationTitle("Favourites")
+                    .overlay{
+                        VStack{
+                            Image(systemName: "doc.text.magnifyingglass")
+                                .foregroundColor(.gray)
+                                .font(.system(size: 50, weight: .heavy))
+                            
+                            Text("Nothing to show here!")
+                                .foregroundColor(.black)
+                                .font(.system(size: 30, weight: .heavy))
+                                .multilineTextAlignment(.center)
+                        }
+                        .opacity(photos.isEmpty ? 1 : 0)
+                    }
             }
         }
         .onAppear {
