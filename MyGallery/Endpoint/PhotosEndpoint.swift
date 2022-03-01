@@ -25,21 +25,28 @@ extension PhotosAPI: APIBuilder{
     func request(with params: String) -> URL {
         switch self {
         case .getPhotos:
-            let allParams = "&tags=\(params)"
+            var allParams = ""
+            
+            if !params.isEmpty {
+                allParams = "&tags=\(params)"
+            }
             
             guard let url = URL(string: "\(self.baseUrl)\(path)\(format)\(allParams)") else{
-                return URL(string: "")!
+                return URL(string: "https://www.flickr.com/services/feeds/")!
             }
             
             return url
             
         case .getFavourites:
-            let id = "&id=\(params)"
+            var id = ""
+            if !params.isEmpty {
+                id = "&id=\(params)"
+            }
             
             guard let url = URL(string: "\(self.baseUrl)\(self.path)\(id)\(format)")else{
-                return URL(string: "")!
+                return URL(string: "https://www.flickr.com/services/feeds/")!
             }
-            print(url)
+            
             return url
         }
     }

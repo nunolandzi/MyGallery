@@ -9,7 +9,10 @@ import Foundation
 
 
 let APPTitle = "KI labs"
-let firstRowParams = "Kittens"
-let secondRowParams = "Dogs"
-let publicFeedParams = "Public Feed"
+let firstRowParams = "kittens"
+let secondRowParams = "dogs"
+let publicFeedParams = ""
+let firstFeedTitle = "Kittens"
+let secondFeedTitle = "Dogs"
+let publicFeedTitle = "Public Feed"
 let userFavourites = "Faves"

@@ -9,27 +9,26 @@ import SwiftUI
 
 struct SelectBoxView: View {
     
-    @Binding var checked: Bool
-    
-    let text: String
+    @Binding var feed: Feed
     
     var body: some View {
         HStack{
-            Image(systemName: checked ? "checkmark.square.fill" : "square")
-                .foregroundColor(checked ? Color(UIColor.systemBlue) : Color.secondary)
+            Image(systemName: feed.isChecked ? "checkmark.square.fill" : "square")
+                .foregroundColor(feed.isChecked ? Color(UIColor.systemBlue) : Color.secondary)
                 .onTapGesture {
-                    self.checked.toggle()
+                    self.feed.isChecked.toggle()
                 }
             
-            Text(text)
+            Text(feed.title)
                 .foregroundColor(.primary)
                 .font(.system(size: 12, weight: .semibold))
         }
     }
 }
 
+
 struct SelectBoxView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectBoxView(checked: .constant(true), text: "Select row")
+        SelectBoxView(feed: .constant(Feed.dummyData))
     }
 }

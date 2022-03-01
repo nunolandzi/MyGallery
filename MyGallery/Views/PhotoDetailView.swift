@@ -18,16 +18,23 @@ struct PhotoDetailView: View {
     let photo: Photo
     
     var body: some View {
-        VStack{
+        VStack(spacing: 10){
             PhotoView(photo: photo)
             
-            Text(photo.author ?? "")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                
+            
+            Text("by: \(photo.author ?? "")")
+                .font(.headline)
+                .foregroundColor(.primary)
+            
             Text("Published: \(photo.published ?? "")")
-                    .font(.caption)
-                    .foregroundColor(.gray)
+                .font(.caption)
+                .foregroundColor(.gray)
+            
+            NavigationLink(destination: FavesView(photo: photo)) {
+                Text("User Favourites")
+            }
+
+            
             
             Spacer()
         }
@@ -40,11 +47,6 @@ struct PhotoDetailView: View {
                 } label: {
                     Image(systemName: "square.and.arrow.up")
                         .foregroundColor(.primary)
-                }
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: FavesView(photo: photo)) {
-                    Text("Fav")
                 }
             }
         }

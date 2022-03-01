@@ -41,7 +41,7 @@ struct ThumbnailView: View {
             
         }
         .padding()
-        .frame(width: 100)
+        .frame(width: 130)
     }
 }
 

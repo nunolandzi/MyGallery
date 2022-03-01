@@ -10,15 +10,14 @@ import SwiftUI
 struct HomeView: View {
     
     @StateObject var viewModel = PhotosViewModelImp(service: PhotosServiceImp())
-    @StateObject var secondRowViewModel = PhotosViewModelImp(service: PhotosServiceImp())
-    @StateObject var publicFeedViewModel = PhotosViewModelImp(service: PhotosServiceImp())
     
-    let filters = [firstRowParams, secondRowParams, publicFeedParams]
-    
-    @State var hideFirstFeed = false
-    @State var hideSecondFeed = false
-    @State var hidePublicFeed = false
     @State var showFiltersMenu = false
+    
+    @State var feeds = [
+        Feed(title: firstFeedTitle, params: firstRowParams, isChecked: true),
+        Feed(title: secondFeedTitle, params: secondRowParams, isChecked: true),
+        Feed(title: publicFeedTitle, params: publicFeedParams, isChecked: true)
+    ]
     
     var body: some View {
         ZStack{
@@ -28,79 +27,39 @@ struct HomeView: View {
                     ProgressView()
                 case .failed(let error):
                     ErrorView(error: error) {
-                        viewModel.getPhotos(params: firstRowParams)
-                        secondRowViewModel.getPhotos(params: secondRowParams)
-                        publicFeedViewModel.getPhotos(params: "")
+                        viewModel.getPhotos(params: feeds[0].title)
                     }
                 case .success(let photos):
                     NavigationView{
                         ScrollView(.vertical){
                             VStack(alignment: .leading){
                                 
-                                if !hideFirstFeed {
-                                    Text(firstRowParams)
-                                        .foregroundColor(.primary)
-                                        .font(.system(size: 30, weight: .bold))
-                                        .padding(.horizontal)
-                                    
-                                    ScrollView (.horizontal, showsIndicators: false) {
-                                         HStack {
-                                             ForEach(photos) { item in
-                                                 NavigationLink(destination: PhotoDetailView(photo: item)) {
-                                                     ThumbnailView(photo: item, width: 80, height: 80, cornerRadius: 10)
-                                                     
+                                if let checked = feeds.first?.isChecked {
+                                    if checked {
+                                        Text(feeds[0].title)
+                                            .foregroundColor(.primary)
+                                            .font(.system(size: 30, weight: .bold))
+                                            .padding(.horizontal)
+                                        
+                                        ScrollView (.horizontal, showsIndicators: false) {
+                                             HStack {
+                                                 ForEach(photos) { item in
+                                                     NavigationLink(destination: PhotoDetailView(photo: item)) {
+                                                         ThumbnailView(photo: item, width: 80, height: 80, cornerRadius: 10)
+                                                         
+                                                     }
+                                                         
                                                  }
-                                                     
                                              }
-                                         }
+                                        }
                                     }
                                 }
                             }
                             
-                            
-                            if !secondRowViewModel.photos.isEmpty && !hideSecondFeed{
-                                
-                                VStack(alignment: .leading){
-                                    Text(secondRowParams)
-                                        .foregroundColor(.primary)
-                                        .font(.system(size: 30, weight: .bold))
-                                        .padding(.horizontal)
-                                 
-                                    ScrollView (.horizontal, showsIndicators: false) {
-                                         HStack {
-                                             ForEach(secondRowViewModel.photos) { item in
-                                                 NavigationLink(destination: PhotoDetailView(photo: item)) {
-                                                     ThumbnailView(photo: item, width: 80, height: 80, cornerRadius: 10)
-                                                     
-                                                 }
-
-                                             }
-                                         }
-                                    }
+                            ForEach(feeds, id: \.self) { feed in
+                                if feed != feeds.first && feed.isChecked{
+                                    FeedView(title: feed.title, params: feed.params)
                                 }
-                                
-                            }
-
-                            if !publicFeedViewModel.photos.isEmpty && !hidePublicFeed {
-                                VStack(alignment: .leading){
-                                    Text(publicFeedParams)
-                                        .foregroundColor(.primary)
-                                        .font(.system(size: 30, weight: .bold))
-                                        .padding(.horizontal)
-                                    
-                                    ScrollView (.horizontal, showsIndicators: false) {
-                                         HStack {
-                                             ForEach(publicFeedViewModel.photos) { item in
-                                                 NavigationLink(destination: PhotoDetailView(photo: item)) {
-                                                     ThumbnailView(photo: item, width: 80, height: 80, cornerRadius: 10)
-                                                     
-                                                 }
-
-                                             }
-                                         }
-                                    }
-                                }
-                                
                             }
                         }
                         .navigationTitle(Text(APPTitle))
@@ -117,6 +76,17 @@ struct HomeView: View {
                                 }
 
                             }
+                            
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                
+                                NavigationLink(destination: SearchView()) {
+                                    Image(systemName: "magnifyingglass.circle")
+                                        .foregroundColor(.primary)
+                                    
+                                }
+                                
+
+                            }
                         }
                     }
                 }
@@ -126,21 +96,14 @@ struct HomeView: View {
             VStack{
                 Spacer()
                 
-                    List{
-                        ForEach(filters, id: \.self) { filter in
-                            if filter == firstRowParams {
-                                SelectBoxView(checked: $hideFirstFeed, text: filter)
-                            }else if filter == secondRowParams{
-                                SelectBoxView(checked: $hideSecondFeed, text: filter)
-                            }else{
-                                SelectBoxView(checked: $hidePublicFeed, text: filter)
-                            }
-                            
-                        }
+                List{
+                    ForEach(Array(feeds.enumerated()), id: \.offset) { index,feed in
+                        SelectBoxView(feed: $feeds[index])
                     }
-                    .listStyle(.grouped)
-                    .frame(height: UIScreen.main.bounds.height*1/3)
-                    .offset(y: showFiltersMenu ? 0 : UIScreen.main.bounds.height*1/3 + 20)
+                }
+                .listStyle(.grouped)
+                .frame(height: UIScreen.main.bounds.height*1/3)
+                .offset(y: showFiltersMenu ? 0 : UIScreen.main.bounds.height*1/3 + 20)
             }
             .background{
                 Color
@@ -148,8 +111,11 @@ struct HomeView: View {
                     .opacity(showFiltersMenu ? 0.3 : 0)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
+                        let filter = feeds.filter{$0.isChecked}
                         withAnimation(.spring()) {
-                            showFiltersMenu = false
+                            if !filter.isEmpty {
+                                showFiltersMenu = false
+                            }
                         }
                     }
             }
@@ -157,9 +123,7 @@ struct HomeView: View {
             
         }
         .onAppear {
-            viewModel.getPhotos(params: firstRowParams)
-            secondRowViewModel.getPhotos(params: secondRowParams)
-            publicFeedViewModel.getPhotos(params: "")
+            viewModel.getPhotos(params: feeds[0].title)
         }
     }
 }
@@ -168,4 +132,15 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
     }
+}
+
+struct Feed: Hashable {
+    
+    let title: String
+    let params: String
+    var isChecked: Bool
+}
+
+extension Feed{
+    static var dummyData = Feed.init(title: "Title", params: "Title", isChecked: true)
 }

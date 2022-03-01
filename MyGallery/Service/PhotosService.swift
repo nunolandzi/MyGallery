@@ -36,7 +36,6 @@ struct PhotosServiceImp: PhotosService {
                     return Just(data)
                         .decode(type: PhotosModel.self, decoder: jsonDecoder)
                         .mapError{error in
-                            print(error)
                             return APIError.decodingError}
                         .eraseToAnyPublisher()
                 }else{

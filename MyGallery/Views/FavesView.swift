@@ -29,7 +29,8 @@ struct FavesView: View {
                 ScrollView(.vertical){
                     LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
                         ForEach(photos) { item in
-                            ThumbnailView(photo: photo, width: 90, height: 90, cornerRadius: 0)
+                            
+                            ThumbnailView(photo: item, width: 90, height: 90, cornerRadius: 0)
                         } //: LOOP
                     } //: GRID
                 }.navigationTitle("User Faves")
